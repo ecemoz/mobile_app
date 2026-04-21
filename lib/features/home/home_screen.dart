@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mobile_app/core/models/app_models.dart';
 import 'package:mobile_app/core/state/app_state.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
@@ -187,23 +188,183 @@ class _FeaturedTopicCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SoftSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IllustrationPanel(
-            title: topic.title,
-            subtitle: topic.shortDescription,
-            icon: topicIconFromKey(topic.iconKey),
-            height: 120,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            '${topic.estimatedLessonCount} lessons • ${topic.difficulty.label} • ${topic.quizQuestions.length} quiz questions',
-            style: Theme.of(context).textTheme.bodyMedium,
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFDF8),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: const Color(0xFFFDECB5)),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFE5D5BA).withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
-    );
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
+        children: [
+          // Ambient Warm Background
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFFFF9EE),
+                    Color(0xFFFFFDF8),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+            ),
+          ),
+          
+          // Animated Sun Glow (Top Right)
+          Positioned(
+            top: -40,
+            right: -40,
+            child: Container(
+              width: 160,
+              height: 160,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    const Color(0xFFFFE082).withValues(alpha: 0.4),
+                    const Color(0xFFFFE082).withValues(alpha: 0.0),
+                  ],
+                ),
+              ),
+            ).animate(onPlay: (controller) => controller.repeat(reverse: true))
+             .scale(begin: const Offset(0.9, 0.9), end: const Offset(1.1, 1.1), duration: 4.seconds, curve: Curves.easeInOut),
+          ),
+
+          // Animated Sun Glow (Bottom Left)
+          Positioned(
+            bottom: -60,
+            left: -30,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    const Color(0xFFFFD54F).withValues(alpha: 0.25),
+                    const Color(0xFFFFD54F).withValues(alpha: 0.0),
+                  ],
+                ),
+              ),
+            ).animate(onPlay: (controller) => controller.repeat(reverse: true))
+             .fade(begin: 0.6, end: 1.0, duration: 3.seconds, curve: Curves.easeInOutSine),
+          ),
+
+          // Content Layer
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Prevents bottom overflow!
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFE5B942).withValues(alpha: 0.15),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        topicIconFromKey(topic.iconKey),
+                        color: const Color(0xFFD18E15),
+                        size: 22,
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF3CD),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: const Color(0xFFFFE082)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.star_rounded, size: 14, color: Color(0xFFD18E15)),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Featured',
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: const Color(0xFFB07100),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  topic.title,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF4A3C2A),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  topic.shortDescription,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: const Color(0xFF8B7E6A),
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${topic.estimatedLessonCount} lessons • ${topic.difficulty.label} • ${topic.quizQuestions.length} quizzes',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFFA19480),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFFFEEBC),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.arrow_forward_rounded,
+                        size: 16,
+                        color: Color(0xFFB07100),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ).animate().fade(duration: 400.ms).slideY(begin: 0.05, end: 0, curve: Curves.easeOutQuad);
   }
 }
