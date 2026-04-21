@@ -1,276 +1,133 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/core/data/cybersecurity_seed.dart';
 import 'package:mobile_app/core/models/app_models.dart';
 
 class MockRepository {
-  static final List<Topic> topics = [
-    Topic(
-      id: 'ux-basics',
-      title: 'UI/UX Design Basics',
-      shortDescription: 'Build intuitive and beautiful user experiences.',
-      description:
-          'Learn how to approach interface design with empathy, structure, and clarity. This topic helps you understand user behavior and transform insights into practical designs.',
-      category: TopicCategory.design,
-      order: 1,
-      lessons: const [
-        Lesson(
-          id: 'ux-1',
-          title: 'Introduction to UI/UX',
-          summary: 'Understand the difference between UI and UX.',
-          content:
-              'UI is what people see and interact with. UX is how they feel while using the product. Great products combine both. Start by identifying user goals, then map each interface element to a user need.',
-          minutes: 5,
-          order: 1,
-        ),
-        Lesson(
-          id: 'ux-2',
-          title: 'Design Thinking',
-          summary: 'A practical framework for solving design problems.',
-          content:
-              'Design Thinking has five core steps: Empathize, Define, Ideate, Prototype, and Test. Keep each cycle short and involve users as early as possible to avoid building the wrong solution.',
-          minutes: 7,
-          order: 2,
-        ),
-        Lesson(
-          id: 'ux-3',
-          title: 'User Research',
-          summary: 'Collect insights through observation and interviews.',
-          content:
-              'Talk to real users and ask open-ended questions. Focus on tasks, pain points, and context. Summarize findings into patterns and personas that guide design decisions.',
-          minutes: 10,
-          order: 3,
-        ),
-      ],
-      quizQuestions: const [
-        QuizQuestion(
-          id: 'ux-q1',
-          prompt: 'What is the main goal of user research?',
-          options: [
-            'Pick trendy colors',
-            'Understand user needs and behavior',
-            'Increase app animation speed',
-            'Reduce development costs only',
-          ],
-          correctIndex: 1,
-          feedback: 'User research reveals real needs and context.',
-        ),
-        QuizQuestion(
-          id: 'ux-q2',
-          prompt: 'Which step comes first in Design Thinking?',
-          options: ['Prototype', 'Empathize', 'Test', 'Define'],
-          correctIndex: 1,
-          feedback: 'Empathy is the foundation of user-centered design.',
-        ),
-        QuizQuestion(
-          id: 'ux-q3',
-          prompt: 'UX primarily focuses on:',
-          options: [
-            'Visual assets only',
-            'Code performance only',
-            'User experience and usability',
-            'Marketing channel growth',
-          ],
-          correctIndex: 2,
-          feedback: 'UX is about how users feel and succeed with a product.',
-        ),
-      ],
-    ),
-    Topic(
-      id: 'web-fundamentals',
-      title: 'Web Development',
-      shortDescription: 'Core building blocks of modern web apps.',
-      description:
-          'Cover essential front-end concepts including semantic HTML, reusable CSS patterns, and JavaScript fundamentals for interactive experiences.',
-      category: TopicCategory.development,
-      order: 2,
-      lessons: const [
-        Lesson(
-          id: 'web-1',
-          title: 'HTML Essentials',
-          summary: 'Structure content with semantic elements.',
-          content:
-              'Use semantic tags like header, main, section, and article. This improves accessibility, readability, and SEO. Organize content hierarchy before styling.',
-          minutes: 8,
-          order: 1,
-        ),
-        Lesson(
-          id: 'web-2',
-          title: 'CSS Layout Patterns',
-          summary: 'Master flexbox and grid for responsive layouts.',
-          content:
-              'Use flexbox for one-dimensional alignment and grid for two-dimensional page structure. Build mobile-first and scale up through breakpoints.',
-          minutes: 9,
-          order: 2,
-        ),
-        Lesson(
-          id: 'web-3',
-          title: 'JavaScript Basics',
-          summary: 'Add behavior and interactivity.',
-          content:
-              'Start with variables, functions, and control flow. Then connect logic to DOM events. Keep code modular and descriptive for maintainability.',
-          minutes: 11,
-          order: 3,
-        ),
-      ],
-      quizQuestions: const [
-        QuizQuestion(
-          id: 'web-q1',
-          prompt: 'What is flexbox best for?',
-          options: [
-            'Database schema design',
-            'One-dimensional layouts',
-            'Image compression',
-            'Version control',
-          ],
-          correctIndex: 1,
-          feedback: 'Flexbox excels at horizontal or vertical alignment.',
-        ),
-        QuizQuestion(
-          id: 'web-q2',
-          prompt: 'Semantic HTML helps with:',
-          options: [
-            'Accessibility and clarity',
-            'Only visual styling',
-            'Only performance',
-            'Only analytics',
-          ],
-          correctIndex: 0,
-          feedback:
-              'Semantic structure improves multiple dimensions of quality.',
-        ),
-      ],
-    ),
-    Topic(
-      id: 'digital-marketing',
-      title: 'Digital Marketing',
-      shortDescription: 'Grow audience and engagement through strategy.',
-      description:
-          'Understand core channels and campaign planning fundamentals. Learn to evaluate performance using clear goals and measurable metrics.',
-      category: TopicCategory.business,
-      order: 3,
-      lessons: const [
-        Lesson(
-          id: 'mkt-1',
-          title: 'Marketing Foundations',
-          summary: 'Understand target audience and value proposition.',
-          content:
-              'Define your audience and core message first. Select channels based on behavior, not trends. Keep your strategy focused and measurable.',
-          minutes: 7,
-          order: 1,
-        ),
-        Lesson(
-          id: 'mkt-2',
-          title: 'Content Strategy',
-          summary: 'Plan useful content for each stage of the funnel.',
-          content:
-              'Map content to awareness, consideration, and conversion. Reuse strong ideas in different formats to keep consistency and save effort.',
-          minutes: 8,
-          order: 2,
-        ),
-      ],
-      quizQuestions: const [
-        QuizQuestion(
-          id: 'mkt-q1',
-          prompt: 'A value proposition should answer:',
-          options: [
-            'What makes your offer useful',
-            'What logo font to use',
-            'How many ads to buy',
-            'How to avoid user feedback',
-          ],
-          correctIndex: 0,
-          feedback: 'Value proposition explains why users should care.',
-        ),
-      ],
-    ),
-    Topic(
-      id: 'data-science',
-      title: 'Data Science Basics',
-      shortDescription:
-          'Explore data, detect patterns, and communicate findings.',
-      description:
-          'Learn the mindset and methods behind practical data work: cleaning, exploring, modeling, and storytelling with data.',
-      category: TopicCategory.data,
-      order: 4,
-      lessons: const [
-        Lesson(
-          id: 'data-1',
-          title: 'Data Types and Sources',
-          summary: 'Understand where data comes from and what it means.',
-          content:
-              'Different data types require different handling strategies. Establish clear definitions and source reliability before analysis.',
-          minutes: 8,
-          order: 1,
-        ),
-        Lesson(
-          id: 'data-2',
-          title: 'Exploratory Analysis',
-          summary: 'Find trends, outliers, and opportunities.',
-          content:
-              'Start with summaries and visualizations. Ask simple questions first, then drill down. Validate assumptions before drawing conclusions.',
-          minutes: 10,
-          order: 2,
-        ),
-      ],
-      quizQuestions: const [
-        QuizQuestion(
-          id: 'data-q1',
-          prompt: 'Why is exploratory analysis important?',
-          options: [
-            'It replaces all modeling',
-            'It helps uncover patterns and issues early',
-            'It is only for dashboards',
-            'It removes the need for clean data',
-          ],
-          correctIndex: 1,
-          feedback:
-              'Exploration reveals shape and quality before deep analysis.',
-        ),
-      ],
-    ),
-  ];
+  static final List<Topic> topics = _buildTopics();
 
-  static const List<AchievementDefinition> achievementDefinitions = [
-    AchievementDefinition(
-      id: 'first_lesson',
-      title: 'First Step',
-      description: 'Complete your first lesson.',
-      unlockHint: 'Finish any lesson',
-      icon: Icons.flag_rounded,
-    ),
-    AchievementDefinition(
-      id: 'topic_finisher',
-      title: 'Topic Finisher',
-      description: 'Finish all lessons in one topic.',
-      unlockHint: 'Complete a full topic',
-      icon: Icons.check_circle_rounded,
-    ),
-    AchievementDefinition(
-      id: 'first_quiz',
-      title: 'Quiz Rookie',
-      description: 'Submit your first quiz.',
-      unlockHint: 'Take any quiz',
-      icon: Icons.quiz_rounded,
-    ),
-    AchievementDefinition(
-      id: 'perfect_score',
-      title: 'Perfect Score',
-      description: 'Score 100% in a quiz.',
-      unlockHint: 'Answer every question correctly',
-      icon: Icons.workspace_premium_rounded,
-    ),
-    AchievementDefinition(
-      id: 'consistent_learner',
-      title: 'Consistent Learner',
-      description: 'Complete three full topics.',
-      unlockHint: 'Keep your streak alive',
-      icon: Icons.local_fire_department_rounded,
-    ),
-    AchievementDefinition(
-      id: 'badge_collector',
-      title: 'Badge Collector',
-      description: 'Unlock four achievements.',
-      unlockHint: 'Collect badges across the app',
-      icon: Icons.military_tech_rounded,
-    ),
-  ];
+  static final List<AchievementDefinition> achievementDefinitions =
+      cybersecurityAchievementsMappingSeed
+          .map((raw) {
+            final id = raw['id'] as String;
+            return AchievementDefinition(
+              id: id,
+              title: raw['title'] as String,
+              description: raw['description'] as String,
+              unlockHint: raw['unlock_hint'] as String,
+              icon: _achievementIcon(id),
+            );
+          })
+          .toList(growable: false);
+
+  static List<Topic> _buildTopics() {
+    final lessonsByTopic = <String, List<Lesson>>{};
+    for (final raw in cybersecurityLessonsSeed) {
+      final topicId = raw['topic_id'] as String;
+      lessonsByTopic
+          .putIfAbsent(topicId, () => <Lesson>[])
+          .add(
+            Lesson(
+              id: raw['id'] as String,
+              title: raw['title'] as String,
+              summary: raw['summary'] as String,
+              content: raw['content'] as String,
+              minutes: raw['minutes'] as int,
+              order: raw['order'] as int,
+            ),
+          );
+    }
+    for (final entry in lessonsByTopic.entries) {
+      entry.value.sort((a, b) => a.order.compareTo(b.order));
+    }
+
+    final quizIdByTopic = <String, String>{
+      for (final raw in cybersecurityQuizzesSeed)
+        raw['topic_id'] as String: raw['id'] as String,
+    };
+
+    final questionsByTopic = <String, List<QuizQuestion>>{};
+    for (final raw in cybersecurityQuizQuestionsSeed) {
+      final topicId = raw['topic_id'] as String;
+      final quizId = raw['quiz_id'] as String;
+      if (quizIdByTopic[topicId] != quizId) continue;
+
+      questionsByTopic
+          .putIfAbsent(topicId, () => <QuizQuestion>[])
+          .add(
+            QuizQuestion(
+              id: raw['id'] as String,
+              prompt: raw['prompt'] as String,
+              options: List<String>.from(raw['options'] as List<Object>),
+              correctIndex: raw['correct_index'] as int,
+              feedback: raw['explanation'] as String,
+            ),
+          );
+    }
+    for (final entry in questionsByTopic.entries) {
+      final questions = entry.value;
+      questions.sort((a, b) {
+        final aOrder = _questionOrder(a.id);
+        final bOrder = _questionOrder(b.id);
+        return aOrder.compareTo(bOrder);
+      });
+    }
+
+    final mappedTopics = cybersecurityTopicsSeed.map((raw) {
+      final topicId = raw['id'] as String;
+      return Topic(
+        id: topicId,
+        title: raw['title'] as String,
+        description: raw['description'] as String,
+        shortDescription: raw['short_description'] as String,
+        category: TopicCategory.cybersecurity,
+        difficulty: _parseDifficulty(raw['difficulty'] as String),
+        order: raw['order'] as int,
+        estimatedLessonCount: raw['estimated_lesson_count'] as int,
+        iconKey: raw['icon'] as String,
+        illustrationHint: raw['illustration'] as String,
+        categoryColorHex: raw['color_tag'] as String,
+        lessons: List<Lesson>.unmodifiable(lessonsByTopic[topicId] ?? const []),
+        quizQuestions: List<QuizQuestion>.unmodifiable(
+          questionsByTopic[topicId] ?? const [],
+        ),
+      );
+    }).toList();
+
+    mappedTopics.sort((a, b) => a.order.compareTo(b.order));
+    return List<Topic>.unmodifiable(mappedTopics);
+  }
+
+  static TopicDifficulty _parseDifficulty(String raw) {
+    switch (raw.toLowerCase()) {
+      case 'intermediate':
+        return TopicDifficulty.intermediate;
+      case 'beginner':
+      default:
+        return TopicDifficulty.beginner;
+    }
+  }
+
+  static int _questionOrder(String questionId) {
+    final parts = questionId.split('q');
+    if (parts.length < 2) return 0;
+    return int.tryParse(parts.last) ?? 0;
+  }
+
+  static IconData _achievementIcon(String achievementId) {
+    switch (achievementId) {
+      case 'first_lesson':
+        return Icons.flag_rounded;
+      case 'topic_complete':
+        return Icons.check_circle_rounded;
+      case 'first_quiz':
+        return Icons.quiz_rounded;
+      case 'perfect_score':
+        return Icons.workspace_premium_rounded;
+      case 'consistent_learner':
+        return Icons.local_fire_department_rounded;
+      case 'badge_collector':
+      default:
+        return Icons.military_tech_rounded;
+    }
+  }
 }

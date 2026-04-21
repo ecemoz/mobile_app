@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
-enum TopicCategory { all, design, development, business, data }
+enum TopicCategory { all, cybersecurity }
 
 extension TopicCategoryX on TopicCategory {
   String get label => switch (this) {
     TopicCategory.all => 'All',
-    TopicCategory.design => 'Design',
-    TopicCategory.development => 'Development',
-    TopicCategory.business => 'Business',
-    TopicCategory.data => 'Data',
+    TopicCategory.cybersecurity => 'Cybersecurity',
+  };
+}
+
+enum TopicDifficulty { beginner, intermediate }
+
+extension TopicDifficultyX on TopicDifficulty {
+  String get label => switch (this) {
+    TopicDifficulty.beginner => 'Beginner',
+    TopicDifficulty.intermediate => 'Intermediate',
   };
 }
 
@@ -74,7 +80,12 @@ class Topic {
     required this.description,
     required this.shortDescription,
     required this.category,
+    required this.difficulty,
     required this.order,
+    required this.estimatedLessonCount,
+    required this.iconKey,
+    required this.illustrationHint,
+    required this.categoryColorHex,
     required this.lessons,
     required this.quizQuestions,
   });
@@ -84,7 +95,12 @@ class Topic {
   final String description;
   final String shortDescription;
   final TopicCategory category;
+  final TopicDifficulty difficulty;
   final int order;
+  final int estimatedLessonCount;
+  final String iconKey;
+  final String illustrationHint;
+  final String categoryColorHex;
   final List<Lesson> lessons;
   final List<QuizQuestion> quizQuestions;
 }

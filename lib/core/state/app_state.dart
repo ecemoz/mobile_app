@@ -263,7 +263,7 @@ class AppState extends ChangeNotifier {
     }
 
     if (completedLessonsForTopic(topic) == topic.lessons.length) {
-      _unlock('topic_finisher', unlocked);
+      _unlock('topic_complete', unlocked);
     }
 
     if (completedQuiz) {

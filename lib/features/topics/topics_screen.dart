@@ -42,7 +42,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Discover lessons in design, development, business, and data.',
+                'Master practical cybersecurity skills with guided modules.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -50,7 +50,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 controller: _searchController,
                 onChanged: (_) => setState(() {}),
                 decoration: const InputDecoration(
-                  hintText: 'Search topics',
+                  hintText: 'Search cybersecurity topics',
                   prefixIcon: Icon(Icons.search_rounded),
                 ),
               ),
@@ -116,11 +116,11 @@ class _TopicCard extends StatelessWidget {
             Container(
               width: 54,
               height: 54,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFEEB6),
+              decoration: BoxDecoration(
+                color: topicColorFromHex(topic.categoryColorHex),
                 borderRadius: AppRadii.md,
               ),
-              child: const Icon(Icons.school_rounded),
+              child: Icon(topicIconFromKey(topic.iconKey)),
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
@@ -138,7 +138,7 @@ class _TopicCard extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    '${topic.lessons.length} lessons • ${topic.order}. in path',
+                    '${topic.estimatedLessonCount} lessons • ${topic.difficulty.label}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: AppSpacing.xs),

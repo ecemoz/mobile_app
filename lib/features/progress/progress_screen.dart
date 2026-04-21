@@ -24,7 +24,7 @@ class ProgressScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Keep momentum. Small steps build strong skills.',
+                'Keep momentum. Small steps build strong cyber defense skills.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -93,9 +93,8 @@ class ProgressScreen extends StatelessWidget {
                                   value >= appState.topics.length) {
                                 return const SizedBox.shrink();
                               }
-                              final title =
-                                  appState.topics[value.toInt()].title;
-                              final compact = title.split(' ').first;
+                              final topic = appState.topics[value.toInt()];
+                              final compact = 'T${topic.order}';
                               return Padding(
                                 padding: const EdgeInsets.only(
                                   top: AppSpacing.xs,
@@ -137,7 +136,7 @@ class ProgressScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
                 title: 'Topic Breakdown',
-                subtitle: 'Detailed learning progress for each path.',
+                subtitle: 'Detailed learning progress for each module.',
               ),
               const SizedBox(height: AppSpacing.sm),
               ...appState.topics.map(

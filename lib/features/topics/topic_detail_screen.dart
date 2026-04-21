@@ -30,7 +30,7 @@ class TopicDetailScreen extends StatelessWidget {
               IllustrationPanel(
                 title: topic.title,
                 subtitle: topic.shortDescription,
-                icon: Icons.layers_rounded,
+                icon: topicIconFromKey(topic.iconKey),
                 height: 140,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -46,6 +46,11 @@ class TopicDetailScreen extends StatelessWidget {
                     Text(
                       topic.description,
                       style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      'Level: ${topic.difficulty.label} • ${topic.estimatedLessonCount} lessons',
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: AppSpacing.md),
                     LinearProgressIndicator(

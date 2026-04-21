@@ -3,6 +3,41 @@ import 'package:intl/intl.dart';
 import 'package:mobile_app/core/theme/app_theme.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 
+Color topicColorFromHex(String hexColor) {
+  final sanitized = hexColor.replaceAll('#', '').trim();
+  final normalized = sanitized.length == 6 ? 'FF$sanitized' : sanitized;
+  final value = int.tryParse(normalized, radix: 16);
+  if (value == null) return const Color(0xFFFFEEB6);
+  return Color(value);
+}
+
+IconData topicIconFromKey(String iconKey) {
+  switch (iconKey) {
+    case 'shield_rounded':
+      return Icons.shield_rounded;
+    case 'key_rounded':
+      return Icons.key_rounded;
+    case 'verified_user_rounded':
+      return Icons.verified_user_rounded;
+    case 'lock_person_rounded':
+      return Icons.lock_person_rounded;
+    case 'https_rounded':
+      return Icons.https_rounded;
+    case 'router_rounded':
+      return Icons.router_rounded;
+    case 'wifi_protected_setup_rounded':
+      return Icons.wifi_protected_setup_rounded;
+    case 'mark_email_read_rounded':
+      return Icons.mark_email_read_rounded;
+    case 'security_rounded':
+      return Icons.security_rounded;
+    case 'health_and_safety_rounded':
+      return Icons.health_and_safety_rounded;
+    default:
+      return Icons.school_rounded;
+  }
+}
+
 class SoftSurfaceCard extends StatelessWidget {
   const SoftSurfaceCard({
     super.key,

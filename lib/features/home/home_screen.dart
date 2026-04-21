@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: AppSpacing.xxs),
                         Text(
-                          'Keep up your learning streak.',
+                          'Stay sharp with your cybersecurity path.',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.md),
               TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Search courses, topics, lessons',
+                  hintText: 'Search cybersecurity topics and lessons',
                   prefixIcon: Icon(Icons.search_rounded),
                 ),
               ),
@@ -95,7 +95,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
                 title: 'Continue Learning',
-                subtitle: 'Pick up where you left off.',
+                subtitle: 'Pick up your next cybersecurity lesson.',
               ),
               const SizedBox(height: AppSpacing.sm),
               SoftSurfaceCard(
@@ -139,7 +139,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
                 title: 'Featured Topic',
-                subtitle: 'Popular with new learners.',
+                subtitle: 'Recommended for security learners.',
               ),
               const SizedBox(height: AppSpacing.sm),
               _FeaturedTopicCard(topic: appState.topics.first),
@@ -188,12 +188,12 @@ class _FeaturedTopicCard extends StatelessWidget {
           IllustrationPanel(
             title: topic.title,
             subtitle: topic.shortDescription,
-            icon: Icons.lightbulb_circle_rounded,
+            icon: topicIconFromKey(topic.iconKey),
             height: 120,
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            '${topic.lessons.length} lessons • ${topic.quizQuestions.length} quiz questions',
+            '${topic.estimatedLessonCount} lessons • ${topic.difficulty.label} • ${topic.quizQuestions.length} quiz questions',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
