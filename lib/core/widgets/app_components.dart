@@ -33,6 +33,26 @@ IconData topicIconFromKey(String iconKey) {
       return Icons.security_rounded;
     case 'health_and_safety_rounded':
       return Icons.health_and_safety_rounded;
+    case 'terminal_rounded':
+      return Icons.terminal_rounded;
+    case 'design_services_rounded':
+      return Icons.design_services_rounded;
+    case 'settings_input_component_rounded':
+      return Icons.settings_input_component_rounded;
+    case 'account_tree_rounded':
+      return Icons.account_tree_rounded;
+    case 'schedule_rounded':
+      return Icons.schedule_rounded;
+    case 'memory_rounded':
+      return Icons.memory_rounded;
+    case 'folder_open_rounded':
+      return Icons.folder_open_rounded;
+    case 'sync_alt_rounded':
+      return Icons.sync_alt_rounded;
+    case 'compare_arrows_rounded':
+      return Icons.compare_arrows_rounded;
+    case 'admin_panel_settings_rounded':
+      return Icons.admin_panel_settings_rounded;
     default:
       return Icons.school_rounded;
   }

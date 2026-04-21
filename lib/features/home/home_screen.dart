@@ -14,11 +14,17 @@ class HomeScreen extends StatelessWidget {
     return Consumer<AppState>(
       builder: (context, appState, _) {
         final userName = appState.currentUser?.fullName ?? 'Learner';
+        final linuxTopics = appState.topics
+            .where((topic) => topic.category == TopicCategory.linux)
+            .toList();
         final continueTopic = appState.topics.firstWhere(
           (topic) => appState.nextIncompleteLesson(topic) != null,
           orElse: () => appState.topics.first,
         );
         final nextLesson = appState.nextIncompleteLesson(continueTopic);
+        final featuredTopic = linuxTopics.isNotEmpty
+            ? linuxTopics.first
+            : appState.topics.first;
         final unlocked = appState.achievements
             .where((item) => item.isUnlocked)
             .take(3)
@@ -40,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: AppSpacing.xxs),
                         Text(
-                          'Stay sharp with your cybersecurity path.',
+                          'Stay sharp with your cybersecurity and Linux path.',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
@@ -55,7 +61,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.md),
               TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Search cybersecurity topics and lessons',
+                  hintText: 'Search cybersecurity and Linux lessons',
                   prefixIcon: Icon(Icons.search_rounded),
                 ),
               ),
@@ -95,7 +101,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
                 title: 'Continue Learning',
-                subtitle: 'Pick up your next cybersecurity lesson.',
+                subtitle: 'Pick up your next cybersecurity or Linux lesson.',
               ),
               const SizedBox(height: AppSpacing.sm),
               SoftSurfaceCard(
@@ -139,10 +145,10 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
                 title: 'Featured Topic',
-                subtitle: 'Recommended for security learners.',
+                subtitle: 'Recommended for security and systems learners.',
               ),
               const SizedBox(height: AppSpacing.sm),
-              _FeaturedTopicCard(topic: appState.topics.first),
+              _FeaturedTopicCard(topic: featuredTopic),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
                 title: 'Recent Achievements',

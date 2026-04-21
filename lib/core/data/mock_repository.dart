@@ -79,7 +79,7 @@ class MockRepository {
         title: raw['title'] as String,
         description: raw['description'] as String,
         shortDescription: raw['short_description'] as String,
-        category: TopicCategory.cybersecurity,
+        category: _parseCategory(raw['category'] as String?),
         difficulty: _parseDifficulty(raw['difficulty'] as String),
         order: raw['order'] as int,
         estimatedLessonCount: raw['estimated_lesson_count'] as int,
@@ -107,6 +107,16 @@ class MockRepository {
     }
   }
 
+  static TopicCategory _parseCategory(String? raw) {
+    switch (raw?.toLowerCase()) {
+      case 'linux':
+        return TopicCategory.linux;
+      case 'cybersecurity':
+      default:
+        return TopicCategory.cybersecurity;
+    }
+  }
+
   static int _questionOrder(String questionId) {
     final parts = questionId.split('q');
     if (parts.length < 2) return 0;
@@ -125,6 +135,32 @@ class MockRepository {
         return Icons.workspace_premium_rounded;
       case 'consistent_learner':
         return Icons.local_fire_department_rounded;
+      case 'first_linux_lesson':
+        return Icons.play_lesson_rounded;
+      case 'first_linux_quiz':
+        return Icons.rule_folder_rounded;
+      case 'linux_topic_complete':
+        return Icons.done_all_rounded;
+      case 'linux_history_starter':
+        return Icons.history_edu_rounded;
+      case 'kernel_explorer':
+        return Icons.settings_input_component_rounded;
+      case 'process_tracker':
+        return Icons.account_tree_rounded;
+      case 'scheduler_starter':
+        return Icons.schedule_rounded;
+      case 'memory_mapper':
+        return Icons.memory_rounded;
+      case 'file_system_explorer':
+        return Icons.folder_open_rounded;
+      case 'terminal_thinker':
+        return Icons.terminal_rounded;
+      case 'ipc_novice':
+        return Icons.compare_arrows_rounded;
+      case 'linux_security_guard':
+        return Icons.admin_panel_settings_rounded;
+      case 'linux_path_complete':
+        return Icons.emoji_events_rounded;
       case 'badge_collector':
       default:
         return Icons.military_tech_rounded;

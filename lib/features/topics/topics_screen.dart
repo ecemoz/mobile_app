@@ -42,7 +42,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Master practical cybersecurity skills with guided modules.',
+                'Master practical cybersecurity and Linux skills with guided modules.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -50,7 +50,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 controller: _searchController,
                 onChanged: (_) => setState(() {}),
                 decoration: const InputDecoration(
-                  hintText: 'Search cybersecurity topics',
+                  hintText: 'Search cybersecurity and Linux topics',
                   prefixIcon: Icon(Icons.search_rounded),
                 ),
               ),

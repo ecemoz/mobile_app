@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-enum TopicCategory { all, cybersecurity }
+enum TopicCategory { all, cybersecurity, linux }
 
 extension TopicCategoryX on TopicCategory {
   String get label => switch (this) {
     TopicCategory.all => 'All',
     TopicCategory.cybersecurity => 'Cybersecurity',
+    TopicCategory.linux => 'Linux',
   };
 }
 

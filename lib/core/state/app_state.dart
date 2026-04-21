@@ -257,6 +257,10 @@ class AppState extends ChangeNotifier {
     int? totalQuestions,
   }) {
     final unlocked = <AchievementDefinition>[];
+    final isLinuxTopic = topic.category == TopicCategory.linux;
+    final hasAnyLinuxLesson = _completedLessonIds.any(
+      (id) => id.startsWith('linux-l'),
+    );
 
     if (_completedLessonIds.isNotEmpty) {
       _unlock('first_lesson', unlocked);
@@ -268,6 +272,70 @@ class AppState extends ChangeNotifier {
 
     if (completedQuiz) {
       _unlock('first_quiz', unlocked);
+    }
+
+    if (hasAnyLinuxLesson) {
+      _unlock('first_linux_lesson', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l1')) {
+      _unlock('linux_history_starter', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l3')) {
+      _unlock('kernel_explorer', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l4')) {
+      _unlock('process_tracker', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l5')) {
+      _unlock('scheduler_starter', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l6')) {
+      _unlock('memory_mapper', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l7')) {
+      _unlock('file_system_explorer', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l8')) {
+      _unlock('terminal_thinker', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l9')) {
+      _unlock('ipc_novice', unlocked);
+    }
+
+    if (_completedLessonIds.contains('linux-l10')) {
+      _unlock('linux_security_guard', unlocked);
+    }
+
+    final linuxTopics = topics
+        .where((item) => item.category == TopicCategory.linux)
+        .toList();
+    final anyLinuxTopicCompleted = linuxTopics.any(
+      (item) => topicProgress(item) >= 1,
+    );
+    if (anyLinuxTopicCompleted) {
+      _unlock('linux_topic_complete', unlocked);
+    }
+
+    if (completedQuiz && isLinuxTopic) {
+      _unlock('first_linux_quiz', unlocked);
+    }
+
+    final allLinuxTopicsCompleted =
+        linuxTopics.isNotEmpty &&
+        linuxTopics.every((item) => topicProgress(item) >= 1);
+    final allLinuxQuizzesTaken =
+        linuxTopics.isNotEmpty &&
+        linuxTopics.every((item) => _quizScores.containsKey(item.id));
+    if (allLinuxTopicsCompleted && allLinuxQuizzesTaken) {
+      _unlock('linux_path_complete', unlocked);
     }
 
     if (completedQuiz &&
@@ -295,9 +363,15 @@ class AppState extends ChangeNotifier {
   void _unlock(String achievementId, List<AchievementDefinition> unlocked) {
     if (_achievementUnlockedAt.containsKey(achievementId)) return;
 
-    final achievement = MockRepository.achievementDefinitions.firstWhere(
-      (item) => item.id == achievementId,
-    );
+    AchievementDefinition? achievement;
+    for (final item in MockRepository.achievementDefinitions) {
+      if (item.id == achievementId) {
+        achievement = item;
+        break;
+      }
+    }
+    if (achievement == null) return;
+
     _achievementUnlockedAt[achievementId] = DateTime.now();
     unlocked.add(achievement);
   }
