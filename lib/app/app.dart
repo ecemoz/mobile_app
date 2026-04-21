@@ -19,7 +19,6 @@ class LearnHubApp extends StatelessWidget {
           title: 'LearnHub',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
           themeMode: appState.themeMode,
           home: const _AppFlow(),
         ),

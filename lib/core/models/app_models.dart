@@ -19,7 +19,7 @@ extension TopicDifficultyX on TopicDifficulty {
   };
 }
 
-enum ThemePreference { system, light, dark }
+enum ThemePreference { system, light }
 
 class AppUser {
   const AppUser({

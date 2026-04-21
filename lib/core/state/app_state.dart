@@ -68,7 +68,6 @@ class AppState extends ChangeNotifier {
   ThemeMode get themeMode => switch (_themePreference) {
     ThemePreference.system => ThemeMode.system,
     ThemePreference.light => ThemeMode.light,
-    ThemePreference.dark => ThemeMode.dark,
   };
 
   int get completedLessonsCount => _completedLessonIds.length;

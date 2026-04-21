@@ -61,11 +61,6 @@ class SettingsScreen extends StatelessWidget {
                           label: Text('Day'),
                           icon: Icon(Icons.wb_sunny_rounded),
                         ),
-                        ButtonSegment(
-                          value: ThemePreference.dark,
-                          label: Text('Night'),
-                          icon: Icon(Icons.nights_stay_rounded),
-                        ),
                       ],
                       selected: {appState.themePreference},
                       onSelectionChanged: (value) {
