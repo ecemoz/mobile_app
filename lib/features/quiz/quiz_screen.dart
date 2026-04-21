@@ -4,6 +4,7 @@ import 'package:mobile_app/core/state/app_state.dart';
 import 'package:mobile_app/core/theme/app_theme.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
+import 'package:mobile_app/core/widgets/fairytale_background.dart';
 import 'package:mobile_app/features/quiz/quiz_result_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -27,16 +28,22 @@ class _QuizScreenState extends State<QuizScreen> {
     final selected = _answers[current.id];
     final progress = (_index + 1) / questions.length;
 
-    return Scaffold(
-      appBar: AppBar(title: Text('${widget.topic.title} Quiz')),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+    return FairytaleBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text('${widget.topic.title} Trial'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Question ${_index + 1} of ${questions.length}',
+                'Enigma ${_index + 1} of ${questions.length}',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.xs),
@@ -73,12 +80,12 @@ class _QuizScreenState extends State<QuizScreen> {
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? const Color(0xFFFFEEBC)
-                                  : Colors.white,
+                                  : Colors.white.withValues(alpha: 0.65),
                               borderRadius: AppRadii.md,
                               border: Border.all(
                                 color: isSelected
                                     ? AppColors.primaryStrong
-                                    : const Color(0xFFE9E2D2),
+                                    : Colors.white.withValues(alpha: 0.8),
                               ),
                             ),
                             child: Row(
@@ -118,9 +125,9 @@ class _QuizScreenState extends State<QuizScreen> {
               ),
               const Spacer(),
               AppPrimaryButton(
-                label: _index == questions.length - 1 ? 'Submit Quiz' : 'Next',
+                label: _index == questions.length - 1 ? 'Seal Answers' : 'Next Enigma',
                 icon: _index == questions.length - 1
-                    ? Icons.check_rounded
+                    ? Icons.auto_awesome_rounded
                     : Icons.arrow_forward_rounded,
                 enabled: selected != null,
                 onPressed: () {
@@ -145,6 +152,7 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }

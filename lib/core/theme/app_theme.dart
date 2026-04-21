@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFFF4BD3D);
-  static const Color primaryStrong = Color(0xFFE0A92A);
-  static const Color cream = Color(0xFFFBF7EE);
+  static const Color primary = Color(0xFFF0B328); // Magical gold
+  static const Color primaryStrong = Color(0xFFD18E15);
+  static const Color cream = Colors.transparent; // Let the background show!
   static const Color surface = Color(0xFFFFFFFF);
-  static const Color ink = Color(0xFF2E2A23);
-  static const Color mutedInk = Color(0xFF7C7468);
-  static const Color success = Color(0xFF2CA56E);
-  static const Color error = Color(0xFFC84E4E);
-  static const Color info = Color(0xFF4E7BC8);
-  static const Color divider = Color(0xFFECE5D6);
+  static const Color ink = Color(0xFF5D4830); // Warm brown/gold text
+  static const Color mutedInk = Color(0xFF9E8D76); // Soft warm gray/beige
+  static const Color success = Color(0xFF5F9E6C);
+  static const Color error = Color(0xFFC86F6F);
+  static const Color info = Color(0xFF6B92CB);
+  static const Color divider = Color(0xFFEADBCE);
 }
 
 class AppTheme {
@@ -21,10 +21,10 @@ class AppTheme {
     final nunito = GoogleFonts.nunitoTextTheme(base.textTheme);
 
     return base.copyWith(
-      scaffoldBackgroundColor: AppColors.cream,
+      scaffoldBackgroundColor: Colors.transparent, // Very important for FairytaleBackground!
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
-        onPrimary: AppColors.ink,
+        onPrimary: Colors.white,
         secondary: AppColors.info,
         surface: AppColors.surface,
         onSurface: AppColors.ink,
@@ -50,24 +50,24 @@ class AppTheme {
         ),
         titleMedium: GoogleFonts.nunito(
           fontSize: 17,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
           color: AppColors.ink,
         ),
         bodyLarge: GoogleFonts.nunito(
           fontSize: 16,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           color: AppColors.ink,
           height: 1.4,
         ),
         bodyMedium: GoogleFonts.nunito(
           fontSize: 14,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           color: AppColors.mutedInk,
           height: 1.4,
         ),
         labelLarge: GoogleFonts.nunito(
           fontSize: 15,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
           color: AppColors.ink,
         ),
       ),

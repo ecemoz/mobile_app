@@ -4,6 +4,7 @@ import 'package:mobile_app/core/state/app_state.dart';
 import 'package:mobile_app/core/theme/app_theme.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
+import 'package:mobile_app/core/widgets/fairytale_background.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -41,30 +42,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   static const _slides = [
     OnboardingSlide(
       phase: SunPhase.dawn,
-      teaserTitle: 'İlk Adım',
-      teaserSubtitle: 'Siber güvenlik dünyasına giriş yap.',
-      mainTitle: 'Yolculuğuna Başla',
+      teaserTitle: 'Enter the Realm',
+      teaserSubtitle: 'A magical journey into cybersecurity.',
+      mainTitle: 'Begin Your Quest',
       mainDesc:
-          'Karmaşık terimlerde boğulmadan, sıfırdan başlayarak güvenli bir şekilde temel becerilerini inşa et.',
-      icon: Icons.shield_outlined,
+          'Step into the enchanted forest of networks and systems. Build your defenses from the ground up.',
+      icon: Icons.shield_rounded,
     ),
     OnboardingSlide(
       phase: SunPhase.morning,
-      teaserTitle: 'Odaklan & Öğren',
-      teaserSubtitle: 'Kısa, pratik ve hedefe yönelik.',
-      mainTitle: 'Kendi Hızında İlerle',
+      teaserTitle: 'Gather Wisdom',
+      teaserSubtitle: 'Learn spells and ancient Linux secrets.',
+      mainTitle: 'Master the Arcane',
       mainDesc:
-          'Linux ve ağ güvenliği gibi konuları, yoğun günlerinde bile kolayca sindirebileceğin kısa derslerle öğren.',
-      icon: Icons.flare_rounded,
+          'Unlock the secrets of command-line incantations and system architecture through bite-sized lore.',
+      icon: Icons.menu_book_rounded,
     ),
     OnboardingSlide(
       phase: SunPhase.noon,
-      teaserTitle: 'Potansiyelini Keşfet',
-      teaserSubtitle: 'Bilgini test et, rozetleri topla.',
-      mainTitle: 'Ustalığını Kanıtla',
+      teaserTitle: 'Prove Your Worth',
+      teaserSubtitle: 'Pass the trials and collect relics.',
+      mainTitle: 'Become a Guardian',
       mainDesc:
-          'Öğrendiklerini quizlerle pekiştir, başarılarını rozetlerle taçlandırarak motivasyonunu yüksek tut.',
-      icon: Icons.emoji_events_rounded,
+          'Test your knowledge in the trials of wisdom and earn glowing badges to prove your mastery.',
+      icon: Icons.auto_awesome_rounded,
     ),
   ];
 
@@ -76,102 +77,105 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            children: [
-              Expanded(
-                child: PageView.builder(
+    return FairytaleBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    controller: _controller,
+                    itemCount: _slides.length,
+                    onPageChanged: (value) => setState(() => _index = value),
+                    itemBuilder: (context, index) {
+                      final slide = _slides[index];
+                      return SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SunCard(
+                              phase: slide.phase,
+                              title: slide.teaserTitle,
+                              subtitle: slide.teaserSubtitle,
+                              icon: slide.icon,
+                            )
+                                .animate(key: ValueKey(slide.phase))
+                                .fade(duration: 400.ms)
+                                .scale(
+                                  begin: const Offset(0.95, 0.95),
+                                  end: const Offset(1, 1),
+                                  curve: Curves.easeOutQuad,
+                                ),
+                            const SizedBox(height: AppSpacing.xl),
+                            Text(
+                              slide.mainTitle,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            )
+                                .animate(key: ValueKey('${slide.phase}_title'))
+                                .fade(duration: 400.ms, delay: 100.ms)
+                                .slideY(
+                                  begin: 0.1,
+                                  end: 0,
+                                  curve: Curves.easeOutQuad,
+                                ),
+                            const SizedBox(height: AppSpacing.sm),
+                            Text(
+                              slide.mainDesc,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            )
+                                .animate(key: ValueKey('${slide.phase}_desc'))
+                                .fade(duration: 400.ms, delay: 200.ms)
+                                .slideY(
+                                  begin: 0.1,
+                                  end: 0,
+                                  curve: Curves.easeOutQuad,
+                                ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SmoothPageIndicator(
                   controller: _controller,
-                  itemCount: _slides.length,
-                  onPageChanged: (value) => setState(() => _index = value),
-                  itemBuilder: (context, index) {
-                    final slide = _slides[index];
-                    return SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SunCard(
-                            phase: slide.phase,
-                            title: slide.teaserTitle,
-                            subtitle: slide.teaserSubtitle,
-                            icon: slide.icon,
-                          )
-                              .animate(key: ValueKey(slide.phase))
-                              .fade(duration: 400.ms)
-                              .scale(
-                                begin: const Offset(0.95, 0.95),
-                                end: const Offset(1, 1),
-                                curve: Curves.easeOutQuad,
-                              ),
-                          const SizedBox(height: AppSpacing.xl),
-                          Text(
-                            slide.mainTitle,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          )
-                              .animate(key: ValueKey('${slide.phase}_title'))
-                              .fade(duration: 400.ms, delay: 100.ms)
-                              .slideY(
-                                begin: 0.1,
-                                end: 0,
-                                curve: Curves.easeOutQuad,
-                              ),
-                          const SizedBox(height: AppSpacing.sm),
-                          Text(
-                            slide.mainDesc,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          )
-                              .animate(key: ValueKey('${slide.phase}_desc'))
-                              .fade(duration: 400.ms, delay: 200.ms)
-                              .slideY(
-                                begin: 0.1,
-                                end: 0,
-                                curve: Curves.easeOutQuad,
-                              ),
-                        ],
-                      ),
+                  count: _slides.length,
+                  effect: const ExpandingDotsEffect(
+                    dotHeight: 8,
+                    dotWidth: 8,
+                    activeDotColor: Color(0xFFD18E15),
+                    dotColor: Color(0xFFEFE8D6),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xl),
+                AppPrimaryButton(
+                  label: _index == _slides.length - 1 ? 'Enter Realm' : 'Next Chapter',
+                  icon: _index == _slides.length - 1 ? Icons.auto_awesome_rounded : Icons.arrow_forward_rounded,
+                  onPressed: () {
+                    if (_index == _slides.length - 1) {
+                      context.read<AppState>().completeOnboarding();
+                      return;
+                    }
+                    _controller.nextPage(
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOutSine,
                     );
                   },
                 ),
-              ),
-              SmoothPageIndicator(
-                controller: _controller,
-                count: _slides.length,
-                effect: const ExpandingDotsEffect(
-                  dotHeight: 8,
-                  dotWidth: 8,
-                  activeDotColor: Color(0xFFE0A92A),
-                  dotColor: Color(0xFFEFE8D6),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xl),
-              AppPrimaryButton(
-                label: _index == _slides.length - 1 ? 'Başla' : 'İleri',
-                icon: Icons.arrow_forward_rounded,
-                onPressed: () {
-                  if (_index == _slides.length - 1) {
+                const SizedBox(height: AppSpacing.sm),
+                AppSecondaryButton(
+                  label: 'Log In to Journey',
+                  onPressed: () {
                     context.read<AppState>().completeOnboarding();
-                    return;
-                  }
-                  _controller.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOut,
-                  );
-                },
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              AppSecondaryButton(
-                label: 'Giriş Yap',
-                onPressed: () {
-                  context.read<AppState>().completeOnboarding();
-                },
-                icon: Icons.login_rounded,
-              ),
-            ],
+                  },
+                  icon: Icons.login_rounded,
+                ),
+              ],
+            ),
           ),
         ),
       ),

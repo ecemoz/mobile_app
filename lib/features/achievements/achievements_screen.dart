@@ -20,12 +20,12 @@ class AchievementsScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
             children: [
               Text(
-                'Achievements',
+                'Magical Relics',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Track earned badges and discover what to unlock next.',
+                'Track your discovered artifacts and see what remains hidden.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -44,7 +44,7 @@ class AchievementsScreen extends StatelessWidget {
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Text(
-                        '${appState.unlockedAchievementsCount} / ${achievements.length} badges earned',
+                        '${appState.unlockedAchievementsCount} / ${achievements.length} relics discovered',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -60,7 +60,7 @@ class AchievementsScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  childAspectRatio: 0.9,
+                  childAspectRatio: 0.8,
                 ),
                 itemBuilder: (context, index) {
                   final item = achievements[index];
@@ -68,8 +68,8 @@ class AchievementsScreen extends StatelessWidget {
 
                   return SoftSurfaceCard(
                     backgroundColor: unlocked
-                        ? AppColors.surface
-                        : const Color(0xFFF2EEE4),
+                        ? Colors.white.withValues(alpha: 0.65)
+                        : Colors.white.withValues(alpha: 0.35),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -79,7 +79,7 @@ class AchievementsScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: unlocked
                                 ? const Color(0xFFFFE8A3)
-                                : const Color(0xFFE0D8C6),
+                                : Colors.white.withValues(alpha: 0.5),
                             borderRadius: AppRadii.md,
                           ),
                           child: Icon(
@@ -93,6 +93,8 @@ class AchievementsScreen extends StatelessWidget {
                         Text(
                           item.definition.title,
                           style: Theme.of(context).textTheme.titleMedium,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: AppSpacing.xxs),
                         Text(
@@ -109,7 +111,7 @@ class AchievementsScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
                                 color: unlocked
-                                    ? AppColors.success
+                                    ? const Color(0xFFB07100)
                                     : AppColors.mutedInk,
                               ),
                           maxLines: 2,

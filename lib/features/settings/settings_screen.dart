@@ -3,6 +3,7 @@ import 'package:mobile_app/core/models/app_models.dart';
 import 'package:mobile_app/core/state/app_state.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
+import 'package:mobile_app/core/widgets/fairytale_background.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -12,15 +13,21 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AppState>(
       builder: (context, appState, _) {
-        return Scaffold(
-          appBar: AppBar(title: const Text('Settings')),
-          body: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            children: [
-              const SectionHeader(
-                title: 'Preferences',
-                subtitle: 'Control your app experience.',
-              ),
+        return FairytaleBackground(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              title: const Text('Realm Settings'),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            body: ListView(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+              children: [
+                const SectionHeader(
+                  title: 'Mystic Preferences',
+                  subtitle: 'Control your magical experience.',
+                ),
               const SizedBox(height: AppSpacing.sm),
               SoftSurfaceCard(
                 child: Column(
@@ -37,7 +44,7 @@ class SettingsScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Theme Preference',
+                        'Realm Illumination',
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
@@ -46,18 +53,18 @@ class SettingsScreen extends StatelessWidget {
                       segments: const [
                         ButtonSegment(
                           value: ThemePreference.system,
-                          label: Text('System'),
-                          icon: Icon(Icons.smartphone_rounded),
+                          label: Text('Natural'),
+                          icon: Icon(Icons.auto_awesome_rounded),
                         ),
                         ButtonSegment(
                           value: ThemePreference.light,
-                          label: Text('Light'),
-                          icon: Icon(Icons.light_mode_rounded),
+                          label: Text('Day'),
+                          icon: Icon(Icons.wb_sunny_rounded),
                         ),
                         ButtonSegment(
                           value: ThemePreference.dark,
-                          label: Text('Dark'),
-                          icon: Icon(Icons.dark_mode_rounded),
+                          label: Text('Night'),
+                          icon: Icon(Icons.nights_stay_rounded),
                         ),
                       ],
                       selected: {appState.themePreference},
@@ -98,14 +105,19 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              OutlinedButton.icon(
+              AppSecondaryButton(
                 onPressed: () {
                   showDialog<void>(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('Reset learning progress?'),
+                      backgroundColor: const Color(0xFFFFFDF8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        side: const BorderSide(color: Color(0xFFFDECB5)),
+                      ),
+                      title: const Text('Reset your journey?'),
                       content: const Text(
-                        'This clears completed lessons, quiz scores, and earned badges.',
+                        'This erases all inscribed chapters, trial scores, and magical relics.',
                       ),
                       actions: [
                         TextButton(
@@ -123,12 +135,13 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.restart_alt_rounded),
-                label: const Text('Reset Progress'),
+                icon: Icons.restart_alt_rounded,
+                label: 'Reset Progress',
               ),
             ],
           ),
-        );
+        ),
+      );
       },
     );
   }

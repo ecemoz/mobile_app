@@ -19,12 +19,12 @@ class ProgressScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
             children: [
               Text(
-                'My Progress',
+                'My Journey',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Keep momentum. Small steps build strong cyber defense skills.',
+                'Every magical step brings you closer to mastery.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -42,17 +42,17 @@ class ProgressScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Overall Completion',
+                            'Lore Mastery',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
-                            '${appState.completedLessonsCount} lessons completed',
+                            '${appState.completedLessonsCount} chapters inscribed',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
-                            '${(appState.averageQuizScore * 100).round()}% avg quiz score',
+                            '${(appState.averageQuizScore * 100).round()}% avg trial score',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
@@ -63,8 +63,8 @@ class ProgressScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
-                title: 'Topic Analytics',
-                subtitle: 'Completion by topic.',
+                title: 'Realm Analytics',
+                subtitle: 'Mastery by magical realm.',
               ),
               const SizedBox(height: AppSpacing.sm),
               SoftSurfaceCard(
@@ -135,8 +135,8 @@ class ProgressScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
-                title: 'Topic Breakdown',
-                subtitle: 'Detailed learning progress for each module.',
+                title: 'Realm Breakdown',
+                subtitle: 'Detailed magical progress for each realm.',
               ),
               const SizedBox(height: AppSpacing.sm),
               ...appState.topics.map(
@@ -152,7 +152,7 @@ class ProgressScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: AppSpacing.xs),
                         Text(
-                          '${appState.completedLessonsForTopic(topic)}/${topic.lessons.length} lessons complete',
+                          '${appState.completedLessonsForTopic(topic)}/${topic.lessons.length} chapters complete',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         const SizedBox(height: AppSpacing.sm),

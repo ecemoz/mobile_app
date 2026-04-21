@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/core/theme/app_theme.dart';
@@ -54,7 +55,7 @@ IconData topicIconFromKey(String iconKey) {
     case 'admin_panel_settings_rounded':
       return Icons.admin_panel_settings_rounded;
     default:
-      return Icons.school_rounded;
+      return Icons.auto_awesome_rounded; // Magical default icon
   }
 }
 
@@ -64,25 +65,40 @@ class SoftSurfaceCard extends StatelessWidget {
     required this.child,
     this.padding = const EdgeInsets.all(AppSpacing.md),
     this.margin,
-    this.backgroundColor = AppColors.surface,
+    this.backgroundColor,
   });
 
   final Widget child;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry? margin;
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
-      padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: backgroundColor ?? Colors.white.withValues(alpha: 0.65),
         borderRadius: AppRadii.lg,
-        boxShadow: AppShadows.soft,
+        border: Border.all(color: Colors.white.withValues(alpha: 0.8), width: 1.5),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFF0B328).withValues(alpha: 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
-      child: child,
+      child: ClipRRect(
+        borderRadius: AppRadii.lg,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+          child: Padding(
+            padding: padding,
+            child: child,
+          ),
+        ),
+      ),
     );
   }
 }
@@ -103,11 +119,30 @@ class AppPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: enabled ? onPressed : null,
-      icon: icon == null ? const SizedBox.shrink() : Icon(icon, size: 20),
-      label: Text(label),
-      style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(52)),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: AppRadii.md,
+        boxShadow: enabled
+            ? [
+                BoxShadow(
+                  color: const Color(0xFFF0B328).withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ]
+            : null,
+      ),
+      child: ElevatedButton.icon(
+        onPressed: enabled ? onPressed : null,
+        icon: icon == null ? const SizedBox.shrink() : Icon(icon, size: 20),
+        label: Text(label),
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size.fromHeight(52),
+          backgroundColor: const Color(0xFFF0B328), // Golden primary
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+      ),
     );
   }
 }
@@ -126,14 +161,19 @@ class AppSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (icon == null) {
-      return OutlinedButton(onPressed: onPressed, child: Text(label));
-    }
-
-    return OutlinedButton.icon(
-      onPressed: onPressed,
-      icon: Icon(icon, size: 20),
-      label: Text(label),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.5),
+        borderRadius: AppRadii.md,
+      ),
+      child: OutlinedButton.icon(
+        onPressed: onPressed,
+        icon: icon == null ? const SizedBox.shrink() : Icon(icon, size: 20),
+        label: Text(label),
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: Color(0xFFEADBCE), width: 1.5),
+        ),
+      ),
     );
   }
 }
@@ -165,14 +205,37 @@ class AppTextInput extends StatelessWidget {
       children: [
         Text(label, style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: AppSpacing.xs),
-        TextField(
-          controller: controller,
-          keyboardType: keyboardType,
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            hintText: hint,
-            prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
-            suffixIcon: suffix,
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.65),
+            borderRadius: AppRadii.md,
+            border: Border.all(color: Colors.white.withValues(alpha: 0.8), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFF0B328).withValues(alpha: 0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: AppRadii.md,
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+              child: TextField(
+                controller: controller,
+                keyboardType: keyboardType,
+                obscureText: obscureText,
+                decoration: InputDecoration(
+                  hintText: hint,
+                  hintStyle: TextStyle(color: AppColors.mutedInk.withValues(alpha: 0.7)),
+                  prefixIcon: prefixIcon == null ? null : Icon(prefixIcon, color: const Color(0xFFD18E15)),
+                  suffixIcon: suffix,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -242,68 +305,106 @@ class IllustrationPanel extends StatelessWidget {
       height: height,
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFF4CF), Color(0xFFFFE39B)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: Colors.white.withValues(alpha: 0.7),
         borderRadius: AppRadii.lg,
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: -20,
-            right: -20,
-            child: CircleAvatar(
-              radius: 56,
-              backgroundColor: Colors.white.withValues(alpha: 0.35),
-            ),
-          ),
-          Positioned(
-            bottom: -26,
-            left: -22,
-            child: CircleAvatar(
-              radius: 48,
-              backgroundColor: Colors.white.withValues(alpha: 0.24),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            child: Row(
-              children: [
-                Container(
-                  width: 58,
-                  height: 58,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: AppRadii.md,
-                  ),
-                  child: Icon(icon, color: AppColors.ink, size: 30),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        subtitle,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: AppColors.ink.withValues(alpha: 0.78),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.9), width: 1.5),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFF0B328).withValues(alpha: 0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
+      ),
+      child: ClipRRect(
+        borderRadius: AppRadii.lg,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Stack(
+            children: [
+              // Magical Background Glow
+              Positioned(
+                top: -30,
+                right: -30,
+                child: Container(
+                  width: 140,
+                  height: 140,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        const Color(0xFFF0B328).withValues(alpha: 0.3),
+                        const Color(0xFFF0B328).withValues(alpha: 0.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -20,
+                left: -20,
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        const Color(0xFFD18E15).withValues(alpha: 0.2),
+                        const Color(0xFFD18E15).withValues(alpha: 0.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 64,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFF0B328).withValues(alpha: 0.2),
+                            blurRadius: 16,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Icon(icon, color: const Color(0xFFD18E15), size: 32),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xs),
+                          Text(
+                            subtitle,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: AppColors.mutedInk,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

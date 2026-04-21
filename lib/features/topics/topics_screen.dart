@@ -37,21 +37,32 @@ class _TopicsScreenState extends State<TopicsScreen> {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
             children: [
               Text(
-                'All Topics',
+                'Explore Realms',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Master practical cybersecurity and Linux skills with guided modules.',
+                'Journey through enchanted domains of cybersecurity and Linux.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.md),
-              TextField(
-                controller: _searchController,
-                onChanged: (_) => setState(() {}),
-                decoration: const InputDecoration(
-                  hintText: 'Search cybersecurity and Linux topics',
-                  prefixIcon: Icon(Icons.search_rounded),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  borderRadius: AppRadii.md,
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.8), width: 1.5),
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (_) => setState(() {}),
+                  decoration: const InputDecoration(
+                    hintText: 'Search the magical archives...',
+                    prefixIcon: Icon(Icons.search_rounded, color: Color(0xFFD18E15)),
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
@@ -129,12 +140,16 @@ class _TopicCard extends StatelessWidget {
                 children: [
                   Text(
                     topic.title,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: const Color(0xFF5D4830),
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.xxs),
                   Text(
                     topic.shortDescription,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: const Color(0xFF9E8D76),
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(

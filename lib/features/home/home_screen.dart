@@ -41,29 +41,61 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Hi, $userName',
-                          style: Theme.of(context).textTheme.headlineMedium,
+                        Row(
+                          children: [
+                            Text(
+                              'Welcome, $userName',
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(
+                              Icons.auto_awesome_rounded,
+                              color: Color(0xFFF0B328),
+                              size: 24,
+                            ).animate(onPlay: (c) => c.repeat(reverse: true)).scale(begin: const Offset(0.8, 0.8), end: const Offset(1.2, 1.2), duration: 2.seconds),
+                          ],
                         ),
                         const SizedBox(height: AppSpacing.xxs),
                         Text(
-                          'Stay sharp with your cybersecurity and Linux path.',
+                          'Your magical journey awaits.',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
                   ),
-                  CircleAvatar(
-                    radius: 24,
-                    child: Text(appState.currentUser?.initials ?? 'L'),
+                  Container(
+                    width: 52,
+                    height: 52,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: const Color(0xFFF0B328), width: 2),
+                      color: const Color(0xFFFFEEB6),
+                    ),
+                    child: Center(
+                      child: Text(
+                        appState.currentUser?.initials ?? 'L',
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF5D4830), fontSize: 18),
+                      ),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Search cybersecurity and Linux lessons',
-                  prefixIcon: Icon(Icons.search_rounded),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  borderRadius: AppRadii.md,
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.8), width: 1.5),
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search for spells and lessons...',
+                    prefixIcon: const Icon(Icons.search_rounded, color: Color(0xFFD18E15)),
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
@@ -101,8 +133,8 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
-                title: 'Continue Learning',
-                subtitle: 'Pick up your next cybersecurity or Linux lesson.',
+                title: 'Continue your Quest',
+                subtitle: 'Pick up your next magical lesson.',
               ),
               const SizedBox(height: AppSpacing.sm),
               SoftSurfaceCard(
@@ -145,15 +177,15 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
-                title: 'Featured Topic',
-                subtitle: 'Recommended for security and systems learners.',
+                title: 'Enchanted Realm',
+                subtitle: 'A recommended topic for your journey.',
               ),
               const SizedBox(height: AppSpacing.sm),
               _FeaturedTopicCard(topic: featuredTopic),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
-                title: 'Recent Achievements',
-                subtitle: 'Celebrate your milestones.',
+                title: 'Magical Treasures',
+                subtitle: 'Celebrate your enchanted milestones.',
               ),
               const SizedBox(height: AppSpacing.sm),
               if (unlocked.isEmpty)

@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 120),
             children: [
               Text(
-                'Profile',
+                'Wanderer\'s Profile',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               const SizedBox(height: AppSpacing.md),
@@ -29,10 +29,10 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundColor: AppColors.primary,
+                      backgroundColor: const Color(0xFFF0B328),
                       child: Text(
                         user?.initials ?? 'L',
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.md),
@@ -55,12 +55,13 @@ class ProfileScreen extends StatelessWidget {
                               vertical: AppSpacing.xxs,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFFE9A9),
+                              color: const Color(0xFFFFEEBC),
                               borderRadius: AppRadii.pill,
+                              border: Border.all(color: const Color(0xFFF0B328)),
                             ),
                             child: Text(
-                              user?.role ?? 'Student',
-                              style: Theme.of(context).textTheme.bodySmall,
+                              user?.role ?? 'Apprentice',
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: const Color(0xFF5D4830)),
                             ),
                           ),
                         ],
@@ -75,19 +76,19 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     _ProfileActionTile(
                       icon: Icons.edit_outlined,
-                      label: 'Edit Profile',
+                      label: 'Edit Identity',
                       onTap: () {},
                     ),
                     const Divider(height: 1),
                     _ProfileActionTile(
                       icon: Icons.workspace_premium_outlined,
-                      label: 'My Certificates',
+                      label: 'My Magical Certificates',
                       onTap: () {},
                     ),
                     const Divider(height: 1),
                     _ProfileActionTile(
                       icon: Icons.bookmark_outline_rounded,
-                      label: 'Saved Courses',
+                      label: 'Saved Lore',
                       onTap: () {},
                     ),
                     const Divider(height: 1),
@@ -106,14 +107,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              OutlinedButton.icon(
+              AppSecondaryButton(
                 onPressed: appState.signOut,
-                icon: const Icon(Icons.logout_rounded),
-                label: const Text('Log Out'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.error,
-                  side: const BorderSide(color: Color(0xFFE7C8C8)),
-                ),
+                icon: Icons.logout_rounded,
+                label: 'Depart Realm',
               ),
             ],
           ),

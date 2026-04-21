@@ -4,6 +4,7 @@ import 'package:mobile_app/core/state/app_state.dart';
 import 'package:mobile_app/core/theme/app_theme.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
+import 'package:mobile_app/core/widgets/fairytale_background.dart';
 import 'package:mobile_app/features/lesson/lesson_detail_screen.dart';
 import 'package:mobile_app/features/quiz/quiz_screen.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +23,16 @@ class TopicDetailScreen extends StatelessWidget {
         final canStartQuiz = appState.canStartQuiz(topic);
         final nextLesson = appState.nextIncompleteLesson(topic);
 
-        return Scaffold(
-          appBar: AppBar(title: Text(topic.title)),
-          body: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+        return FairytaleBackground(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              title: Text(topic.title),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            body: ListView(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
               IllustrationPanel(
                 title: topic.title,
@@ -39,7 +46,7 @@ class TopicDetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'About This Topic',
+                      'The Lore of this Realm',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: AppSpacing.xs),
@@ -67,8 +74,8 @@ class TopicDetailScreen extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
-                title: 'Lessons',
-                subtitle: 'Complete in order to unlock the quiz.',
+                title: 'Chapters of the Journey',
+                subtitle: 'Complete in order to unlock the Trial of Wisdom.',
               ),
               const SizedBox(height: AppSpacing.sm),
               ...sortedLessons.map(
@@ -80,7 +87,7 @@ class TopicDetailScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.md),
               if (nextLesson != null)
                 AppPrimaryButton(
-                  label: 'Continue Next Lesson',
+                  label: 'Continue Next Chapter',
                   icon: Icons.play_arrow_rounded,
                   onPressed: () {
                     Navigator.of(context).push(
@@ -96,10 +103,10 @@ class TopicDetailScreen extends StatelessWidget {
               if (nextLesson != null) const SizedBox(height: AppSpacing.sm),
               AppSecondaryButton(
                 label: canStartQuiz
-                    ? 'Start Topic Quiz'
-                    : 'Quiz unlocks after all lessons',
+                    ? 'Begin Trial of Wisdom'
+                    : 'Trial unlocks after all chapters',
                 icon: canStartQuiz
-                    ? Icons.quiz_rounded
+                    ? Icons.auto_awesome_rounded
                     : Icons.lock_outline_rounded,
                 onPressed: canStartQuiz
                     ? () {
@@ -113,7 +120,8 @@ class TopicDetailScreen extends StatelessWidget {
               ),
             ],
           ),
-        );
+        ),
+      );
       },
     );
   }
@@ -145,8 +153,8 @@ class _LessonListTile extends StatelessWidget {
           : null,
       child: SoftSurfaceCard(
         backgroundColor: isUnlocked
-            ? AppColors.surface
-            : const Color(0xFFF3EFE5),
+            ? Colors.white.withValues(alpha: 0.65)
+            : Colors.white.withValues(alpha: 0.35),
         child: Row(
           children: [
             Container(
@@ -154,10 +162,10 @@ class _LessonListTile extends StatelessWidget {
               height: 42,
               decoration: BoxDecoration(
                 color: isCompleted
-                    ? const Color(0xFFD9F2E7)
+                    ? const Color(0xFFEADBCE)
                     : (isUnlocked
-                          ? const Color(0xFFFFEFBF)
-                          : const Color(0xFFE6DECD)),
+                          ? const Color(0xFFFFEEBC)
+                          : Colors.white.withValues(alpha: 0.5)),
                 borderRadius: AppRadii.md,
               ),
               child: Icon(

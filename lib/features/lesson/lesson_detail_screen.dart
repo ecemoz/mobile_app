@@ -3,6 +3,7 @@ import 'package:mobile_app/core/models/app_models.dart';
 import 'package:mobile_app/core/state/app_state.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
+import 'package:mobile_app/core/widgets/fairytale_background.dart';
 import 'package:mobile_app/features/quiz/quiz_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -33,13 +34,19 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
         final progress = appState.topicProgress(topic);
         final nextLesson = appState.nextIncompleteLesson(topic);
 
-        return Scaffold(
-          appBar: AppBar(title: Text(lesson.title)),
-          body: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+        return FairytaleBackground(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              title: Text(lesson.title),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            body: ListView(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
               Text(
-                'Lesson ${lesson.order} of ${topic.lessons.length}',
+                'Chapter ${lesson.order} of ${topic.lessons.length}',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: AppSpacing.xs),
@@ -72,7 +79,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
               const SizedBox(height: AppSpacing.md),
               if (_showSuccess)
                 SoftSurfaceCard(
-                  backgroundColor: const Color(0xFFEFF9F4),
+                  backgroundColor: const Color(0xFFF3FAF6).withValues(alpha: 0.8),
                   child: Row(
                     children: [
                       const Icon(
@@ -82,7 +89,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                       const SizedBox(width: AppSpacing.sm),
                       Expanded(
                         child: Text(
-                          'Great work! Lesson marked as completed.',
+                          'Excellent! Chapter inscribed in your spellbook.',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
@@ -91,9 +98,9 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                 ),
               if (_showSuccess) const SizedBox(height: AppSpacing.md),
               AppPrimaryButton(
-                label: isCompleted ? 'Lesson Completed' : 'Mark as Completed',
+                label: isCompleted ? 'Chapter Mastered' : 'Complete Chapter',
                 icon: isCompleted
-                    ? Icons.check_circle_rounded
+                    ? Icons.auto_awesome_rounded
                     : Icons.done_rounded,
                 enabled: !isCompleted,
                 onPressed: () {
@@ -109,12 +116,24 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                       builder: (context) {
                         final badge = unlocked.first;
                         return AlertDialog(
-                          title: const Text('Achievement Unlocked'),
+                          backgroundColor: const Color(0xFFFFFDF8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                            side: const BorderSide(color: Color(0xFFFDECB5)),
+                          ),
+                          title: const Text('Magical Relic Discovered!'),
                           content: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(badge.icon, size: 42),
-                              const SizedBox(height: 12),
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFFFEEBC),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(badge.icon, size: 42, color: const Color(0xFFD18E15)),
+                              ),
+                              const SizedBox(height: 16),
                               Text(
                                 badge.title,
                                 style: Theme.of(context).textTheme.titleMedium,
@@ -141,7 +160,7 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
               const SizedBox(height: AppSpacing.sm),
               if (nextLesson != null && nextLesson.id != lesson.id)
                 AppSecondaryButton(
-                  label: 'Next Lesson Suggestion',
+                  label: 'Begin Next Chapter',
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
@@ -158,10 +177,10 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                   (nextLesson.id == lesson.id && isCompleted))
                 AppSecondaryButton(
                   label: appState.canStartQuiz(topic)
-                      ? 'Topic Complete, Start Quiz'
-                      : 'Return to Topic',
+                      ? 'Realm Complete, Begin Trial'
+                      : 'Return to Lore',
                   icon: appState.canStartQuiz(topic)
-                      ? Icons.quiz_rounded
+                      ? Icons.auto_awesome_rounded
                       : Icons.arrow_back_rounded,
                   onPressed: () {
                     if (appState.canStartQuiz(topic)) {
@@ -177,7 +196,8 @@ class _LessonDetailScreenState extends State<LessonDetailScreen> {
                 ),
             ],
           ),
-        );
+        ),
+      );
       },
     );
   }

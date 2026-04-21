@@ -3,6 +3,7 @@ import 'package:mobile_app/core/models/app_models.dart';
 import 'package:mobile_app/core/theme/app_theme.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
+import 'package:mobile_app/core/widgets/fairytale_background.dart';
 import 'package:mobile_app/features/quiz/quiz_screen.dart';
 
 class QuizResultScreen extends StatefulWidget {
@@ -29,12 +30,24 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
       showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Badge Earned'),
+          backgroundColor: const Color(0xFFFFFDF8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+            side: const BorderSide(color: Color(0xFFFDECB5)),
+          ),
+          title: const Text('Magical Relic Discovered!'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(badge.icon, size: 44),
-              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFFEEBC),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(badge.icon, size: 44, color: const Color(0xFFD18E15)),
+              ),
+              const SizedBox(height: 16),
               Text(badge.title, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               Text(badge.description, textAlign: TextAlign.center),
@@ -43,7 +56,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Awesome'),
+              child: const Text('Marvelous'),
             ),
           ],
         ),
@@ -56,10 +69,16 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     final outcome = widget.outcome;
     final percent = (outcome.scorePercent * 100).round();
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Quiz Result')),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+    return FairytaleBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text('Trial Results'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: ListView(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
         children: [
           SoftSurfaceCard(
             child: Column(
@@ -75,7 +94,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  outcome.isPassed ? 'Great job!' : 'Keep going!',
+                  outcome.isPassed ? 'A Triumph of Wisdom!' : 'The Lore Demands More Study.',
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -87,8 +106,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   outcome.isPassed
-                      ? 'You passed this quiz. Keep your momentum.'
-                      : 'Review the lessons and try again for a better score.',
+                      ? 'You have proven your mastery. Carry this wisdom forward.'
+                      : 'Consult the ancient texts and face the trial again.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
@@ -97,8 +116,8 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ),
           const SizedBox(height: AppSpacing.md),
           const SectionHeader(
-            title: 'Question Feedback',
-            subtitle: 'Check correct and incorrect answers.',
+            title: 'Enigma Reflections',
+            subtitle: 'Review your mastery of the realm.',
           ),
           const SizedBox(height: AppSpacing.sm),
           ...outcome.topic.quizQuestions.map((question) {
@@ -143,7 +162,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           }),
           const SizedBox(height: AppSpacing.sm),
           AppPrimaryButton(
-            label: outcome.isPassed ? 'Continue Learning' : 'Retry Quiz',
+            label: outcome.isPassed ? 'Continue Journey' : 'Face Trial Again',
             icon: outcome.isPassed
                 ? Icons.arrow_forward_rounded
                 : Icons.refresh_rounded,
@@ -161,7 +180,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
           ),
           const SizedBox(height: AppSpacing.sm),
           AppSecondaryButton(
-            label: 'Back to Topic',
+            label: 'Return to Lore',
             icon: Icons.arrow_back_rounded,
             onPressed: () => Navigator.pop(context),
           ),
@@ -184,6 +203,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             ),
           ],
         ],
+      ),
       ),
     );
   }
