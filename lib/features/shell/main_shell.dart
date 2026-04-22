@@ -46,7 +46,7 @@ class _MainShellState extends State<MainShell> {
         body: IndexedStack(index: _index, children: _screens),
         bottomNavigationBar: SafeArea(
           child: Container(
-            margin: const EdgeInsets.fromLTRB(16, 0, 16, 16), // Lifted up a bit
+            margin: const EdgeInsets.fromLTRB(8, 0, 8, 8), // Lifted up a bit
             decoration: BoxDecoration(
               color: Colors.white.withValues(alpha: 0.65), // Glassmorphism white
               borderRadius: AppRadii.lg,
