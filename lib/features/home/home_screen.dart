@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mobile_app/core/state/app_state.dart';
 import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
 import 'package:mobile_app/features/topics/topic_detail_screen.dart';
 import 'package:mobile_app/features/ai_insights/presentation/widgets/ai_recommendation_card.dart';
+import 'package:mobile_app/features/shell/main_shell.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                               Icons.auto_awesome_rounded,
                               color: Color(0xFFF0B328),
                               size: 24,
-                            ).animate(onPlay: (c) => c.repeat(reverse: true)).scale(begin: const Offset(0.8, 0.8), end: const Offset(1.2, 1.2), duration: 2.seconds),
+                            ),
                           ],
                         ),
                         const SizedBox(height: AppSpacing.xxs),
@@ -59,18 +59,23 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFFF0B328), width: 2),
-                      color: const Color(0xFFFFEEB6),
-                    ),
-                    child: Center(
-                      child: Text(
-                        appState.currentUser?.initials ?? 'L',
-                        style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF5D4830), fontSize: 18),
+                  GestureDetector(
+                    onTap: () {
+                      MainShell.navigateTo(context, 4);
+                    },
+                    child: Container(
+                      width: 52,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: const Color(0xFFF0B328), width: 2),
+                        color: const Color(0xFFFFEEB6),
+                      ),
+                      child: Center(
+                        child: Text(
+                          appState.currentUser?.initials ?? 'L',
+                          style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF5D4830), fontSize: 18),
+                        ),
                       ),
                     ),
                   ),
@@ -177,7 +182,7 @@ class HomeScreen extends StatelessWidget {
                 subtitle: 'AI personalized path for your journey.',
               ),
               const SizedBox(height: AppSpacing.sm),
-              AiRecommendationCard(userId: appState.currentUser?.email ?? 'user_123'),
+              // AiRecommendationCard(userId: appState.currentUser?.email ?? 'user_123'),
               const SizedBox(height: AppSpacing.lg),
               const SectionHeader(
                 title: 'Magical Treasures',

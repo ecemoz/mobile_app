@@ -27,6 +27,43 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: const TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFFD32F2F), // A readable error red
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  void _handleSignIn() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty) {
+      _showError('The Email Scroll cannot be empty.');
+      return;
+    }
+    
+    // Basic email format validation
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+      _showError('Please enter a valid magical email scroll.');
+      return;
+    }
+
+    if (password.isEmpty) {
+      _showError('Your Secret Passphrase is required.');
+      return;
+    }
+
+    context.read<AppState>().signIn(
+      email: email,
+      password: password,
+      rememberMe: _rememberMe,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FairytaleBackground(
@@ -108,13 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppPrimaryButton(
                   label: 'Enter Realm',
                   icon: Icons.arrow_forward_rounded,
-                  onPressed: () {
-                    context.read<AppState>().signIn(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      rememberMe: _rememberMe,
-                    );
-                  },
+                  onPressed: _handleSignIn,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Center(

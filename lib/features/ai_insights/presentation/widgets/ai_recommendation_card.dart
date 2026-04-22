@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_app/features/ai_insights/presentation/providers/ai_insights_providers.dart';
 import 'package:mobile_app/features/ai_insights/presentation/widgets/glowing_ai_container.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class AiRecommendationCard extends ConsumerWidget {
   const AiRecommendationCard({super.key, required this.userId});
@@ -21,9 +20,7 @@ class AiRecommendationCard extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.auto_awesome_rounded, color: Color(0xFFD18E15), size: 20)
-                      .animate(onPlay: (c) => c.repeat(reverse: true))
-                      .scale(begin: const Offset(0.9, 0.9), end: const Offset(1.1, 1.1), duration: 2.seconds),
+                  const Icon(Icons.auto_awesome_rounded, color: Color(0xFFD18E15), size: 20),
                   const SizedBox(width: 8),
                   Text(
                     'AI Recommendation',
@@ -117,7 +114,7 @@ class AiRecommendationCard extends ConsumerWidget {
               ),
             ],
           ),
-        ).animate().fade(duration: 400.ms).slideY(begin: 0.1, end: 0, curve: Curves.easeOut);
+        );
       },
       loading: () => const _AiRecommendationShimmer(),
       error: (error, stack) => _AiRecommendationError(
@@ -166,8 +163,7 @@ class _AiRecommendationShimmer extends StatelessWidget {
           ),
         ],
       ),
-    ).animate(onPlay: (c) => c.repeat())
-     .shimmer(duration: 1500.ms, color: Colors.white.withValues(alpha: 0.5));
+    );
   }
 }
 

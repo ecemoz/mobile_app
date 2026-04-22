@@ -11,12 +11,23 @@ import 'package:mobile_app/features/topics/topics_screen.dart';
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
 
+  static void navigateTo(BuildContext context, int index) {
+    final state = context.findAncestorStateOfType<_MainShellState>();
+    state?.navigateTo(index);
+  }
+
   @override
   State<MainShell> createState() => _MainShellState();
 }
 
 class _MainShellState extends State<MainShell> {
   int _index = 0;
+
+  void navigateTo(int index) {
+    if (_index != index && mounted) {
+      setState(() => _index = index);
+    }
+  }
 
   static const _screens = [
     HomeScreen(),

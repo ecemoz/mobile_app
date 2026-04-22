@@ -32,6 +32,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: const TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFFD32F2F), // A readable error red
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  void _handleSignUp() {
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    final confirm = _confirmController.text;
+
+    if (name.isEmpty) {
+      _showError('Traveler\'s Name cannot be empty.');
+      return;
+    }
+
+    if (email.isEmpty) {
+      _showError('The Email Scroll cannot be empty.');
+      return;
+    }
+
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+      _showError('Please enter a valid magical email scroll.');
+      return;
+    }
+
+    if (password.isEmpty) {
+      _showError('Your Secret Passphrase is required.');
+      return;
+    }
+
+    if (password != confirm) {
+      _showError('Your passphrases do not match.');
+      return;
+    }
+
+    context.read<AppState>().register(
+      fullName: name,
+      email: email,
+      password: password,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FairytaleBackground(
@@ -124,19 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 AppPrimaryButton(
                   label: 'Sign Up',
                   icon: Icons.rocket_launch_rounded,
-                  onPressed: () {
-                    if (_passwordController.text != _confirmController.text) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Passphrases do not match.')),
-                      );
-                      return;
-                    }
-                    context.read<AppState>().register(
-                      fullName: _nameController.text,
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    );
-                  },
+                  onPressed: _handleSignUp,
                   enabled: _agreeToPolicy,
                 ),
                 const SizedBox(height: AppSpacing.md),

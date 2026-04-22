@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class GlowingAiContainer extends StatelessWidget {
   const GlowingAiContainer({
@@ -87,8 +86,7 @@ class GlowingAiContainer extends StatelessWidget {
                   ],
                 ),
               ),
-            ).animate(onPlay: (controller) => controller.repeat(reverse: true))
-             .scale(begin: const Offset(0.9, 0.9), end: const Offset(1.1, 1.1), duration: 3.seconds, curve: Curves.easeInOut),
+            ),
           ),
           Padding(
             padding: padding,
