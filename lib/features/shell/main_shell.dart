@@ -33,33 +33,40 @@ class _MainShellState extends State<MainShell> {
         backgroundColor: Colors.transparent, // Let background shine through
         extendBody: true, // Allow content behind the nav bar
         body: IndexedStack(index: _index, children: _screens),
-        bottomNavigationBar: Container(
-          margin: const EdgeInsets.fromLTRB(16, 0, 16, 24), // Lifted up a bit
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.65), // Glassmorphism white
-            borderRadius: AppRadii.lg,
-            border: Border.all(color: Colors.white.withValues(alpha: 0.8), width: 1.5),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFFF0B328).withValues(alpha: 0.1),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: AppRadii.lg,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-              child: NavigationBar(
-                selectedIndex: _index,
-                onDestinationSelected: (value) {
-                  setState(() => _index = value);
-                },
-                height: 70,
-                indicatorColor: const Color(0xFFFFEEB6).withValues(alpha: 0.6), // Magical gold indicator
-                backgroundColor: Colors.transparent, // Handled by container
-                destinations: const [
+        bottomNavigationBar: SafeArea(
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(16, 0, 16, 16), // Lifted up a bit
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.65), // Glassmorphism white
+              borderRadius: AppRadii.lg,
+              border: Border.all(color: Colors.white.withValues(alpha: 0.8), width: 1.5),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFF0B328).withValues(alpha: 0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: AppRadii.lg,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    splashColor: const Color(0xFFFFC107).withValues(alpha: 0.3), // Sun glow splash
+                    highlightColor: const Color(0xFFFFD54F).withValues(alpha: 0.2),
+                  ),
+                  child: NavigationBar(
+                    selectedIndex: _index,
+                    onDestinationSelected: (value) {
+                      setState(() => _index = value);
+                    },
+                    height: 60,
+                    indicatorColor: const Color(0xFFFFC107).withValues(alpha: 0.65), // Radiant sun indicator
+                    backgroundColor: Colors.transparent, // Handled by container
+                    labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+                    destinations: const [
                   NavigationDestination(
                     icon: Icon(Icons.home_outlined),
                     selectedIcon: Icon(Icons.home_rounded),
@@ -85,7 +92,9 @@ class _MainShellState extends State<MainShell> {
                     selectedIcon: Icon(Icons.person_rounded),
                     label: 'Profile',
                   ),
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
