@@ -5,6 +5,9 @@ import 'package:mobile_app/core/theme/app_tokens.dart';
 import 'package:mobile_app/core/widgets/app_components.dart';
 import 'package:mobile_app/core/widgets/fairytale_background.dart';
 import 'package:mobile_app/features/quiz/quiz_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_app/features/ai_insights/presentation/providers/ai_insights_providers.dart';
+import 'package:mobile_app/features/ai_insights/presentation/widgets/ai_quiz_feedback_card.dart';
 
 class QuizResultScreen extends StatefulWidget {
   const QuizResultScreen({super.key, required this.outcome});
@@ -120,46 +123,10 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
             subtitle: 'Review your mastery of the realm.',
           ),
           const SizedBox(height: AppSpacing.sm),
-          ...outcome.topic.quizQuestions.map((question) {
-            final selected = outcome.answers[question.id];
-            final correct = selected == question.correctIndex;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: SoftSurfaceCard(
-                backgroundColor: correct
-                    ? const Color(0xFFEFF9F4)
-                    : const Color(0xFFFFF1EF),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      correct
-                          ? Icons.check_circle_rounded
-                          : Icons.cancel_rounded,
-                      color: correct ? AppColors.success : AppColors.error,
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            question.prompt,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                          const SizedBox(height: AppSpacing.xxs),
-                          Text(
-                            question.feedback,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }),
+          _AiQuizFeedbackList(
+            quizId: outcome.topic.id,
+            answers: outcome.answers,
+          ),
           const SizedBox(height: AppSpacing.sm),
           AppPrimaryButton(
             label: outcome.isPassed ? 'Continue Journey' : 'Face Trial Again',
@@ -208,3 +175,58 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
     );
   }
 }
+
+class _AiQuizFeedbackList extends ConsumerWidget {
+  const _AiQuizFeedbackList({
+    required this.quizId,
+    required this.answers,
+  });
+
+  final String quizId;
+  final Map<String, int> answers;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final params = QuizFeedbackParams(quizId: quizId, answers: answers);
+    final feedbackAsync = ref.watch(aiQuizFeedbackProvider(params));
+
+    return feedbackAsync.when(
+      data: (feedbacks) {
+        return Column(
+          children: feedbacks.map((feedback) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
+              child: AiQuizFeedbackCard(feedback: feedback),
+            );
+          }).toList(),
+        );
+      },
+      loading: () => const Padding(
+        padding: EdgeInsets.symmetric(vertical: 32),
+        child: Center(child: CircularProgressIndicator(color: Color(0xFFD18E15))),
+      ),
+      error: (error, stack) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Center(
+          child: Column(
+            children: [
+              const Icon(Icons.error_outline_rounded, color: Color(0xFFD18E15), size: 32),
+              const SizedBox(height: 8),
+              Text(
+                'The Oracle could not analyze your trial at this time.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: const Color(0xFF8B7E6A)),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => ref.refresh(aiQuizFeedbackProvider(params)),
+                child: const Text('Try Again', style: TextStyle(color: Color(0xFFB07100))),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+

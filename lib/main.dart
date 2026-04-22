@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_app/app/app.dart';
 
 void main() {
-  runApp(const LearnHubApp());
+  runApp(
+    const ProviderScope(
+      child: LearnHubApp(),
+    ),
+  );
 }
