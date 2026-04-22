@@ -43,8 +43,10 @@ class MagicalJourneyMap extends StatelessWidget {
         Positioned.fill(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 40),
-            child: CustomPaint(
-              painter: MagicalPathPainter(),
+            child: RepaintBoundary(
+              child: CustomPaint(
+                painter: MagicalPathPainter(),
+              ),
             ),
           ),
         ),

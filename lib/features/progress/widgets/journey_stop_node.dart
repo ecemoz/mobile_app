@@ -47,20 +47,22 @@ class JourneyStopNode extends StatelessWidget {
         // Outer glow if active
         if (isActive)
           Positioned.fill(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                borderRadius: AppRadii.lg,
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFFFFD54F).withValues(alpha: 0.3),
-                    blurRadius: 30,
-                    spreadRadius: 4,
-                  ),
-                ],
-              ),
-            ).animate(onPlay: (c) => c.repeat(reverse: true))
-             .fade(begin: 0.5, end: 1.0, duration: 2.seconds),
+            child: RepaintBoundary(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  borderRadius: AppRadii.lg,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFFFD54F).withValues(alpha: 0.3),
+                      blurRadius: 30,
+                      spreadRadius: 4,
+                    ),
+                  ],
+                ),
+              ).animate(onPlay: (c) => c.repeat(reverse: true))
+               .scale(begin: const Offset(0.98, 0.98), end: const Offset(1.03, 1.03), duration: 2.seconds),
+            ),
           ),
 
         Padding(
@@ -106,28 +108,6 @@ class JourneyStopNode extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                if (isStrongest)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFFFF3CD),
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: const Color(0xFFFFE082)),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.stars_rounded, size: 14, color: Color(0xFFD18E15)),
-                                        const SizedBox(width: 4),
-                                        Text(
-                                          'Strongest',
-                                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                            color: const Color(0xFFB07100),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                               ],
                             ),
                             const SizedBox(height: 4),
@@ -197,6 +177,21 @@ class JourneyStopNode extends StatelessWidget {
             ),
           ),
         ),
+
+        // Glowing star in the top right for the Strongest realm
+        if (isStrongest)
+          Positioned(
+            top: 8,
+            right: 24,
+            child: const Icon(
+              Icons.star_rounded,
+              color: Color(0xFFF0B328),
+              size: 32,
+            ).animate(onPlay: (c) => c.repeat(reverse: true))
+             .scale(begin: const Offset(1, 1), end: const Offset(1.2, 1.2), duration: 1.seconds)
+             .then()
+             .scale(begin: const Offset(1.2, 1.2), end: const Offset(1, 1), duration: 1.seconds),
+          ),
       ],
     );
   }
